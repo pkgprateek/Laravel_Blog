@@ -1,5 +1,11 @@
 @extends('main')
 
+@section('title', '| Home')
+
+@section('stylesheets')
+    {!! Html::style('css/carousalstyle.css') !!}
+@stop
+
 @section('carousal')
     <!-- Carousel
     ================================================== -->
