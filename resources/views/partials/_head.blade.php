@@ -19,3 +19,5 @@
 <![endif]-->
 
 @yield('stylesheets')
+
+{{ Html::style('css/styles.css') }}

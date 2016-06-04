@@ -15,6 +15,8 @@
 
         <div class="container">
 
+            @include('partials._messages')
+
             @yield('content')
 
             @yield('sidebar')

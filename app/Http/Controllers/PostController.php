@@ -3,10 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
 use App\Http\Requests;
-
 use App\Post;
+use Session;
 
 class PostController extends Controller
 {
@@ -17,7 +16,11 @@ class PostController extends Controller
      */
     public function index()
     {
-        //
+        //create a variable and save all blog p[ost in that
+        $posts = Post::all();
+
+        ////return a view and pass in the above variable
+        return view('posts.index')->with('posts', $posts);
     }
 
     /**
@@ -51,6 +54,8 @@ class PostController extends Controller
 
         $post->save();
 
+        Session::flash('success', 'The Blog post has been successfully created!');
+
         //redirect to another page
         return redirect()->route('posts.show', $post->id);
     }
@@ -63,7 +68,8 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        //
+        $post = Post::find($id);
+        return view('posts.show')->with('post', $post);
     }
 
     /**
