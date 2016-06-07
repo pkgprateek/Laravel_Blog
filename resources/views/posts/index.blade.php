@@ -24,7 +24,7 @@
 			<table class="table table-hover">
 				<thead>
 					<th>#</th>
-					<th>Title</th>
+					<th class="col-md-3">Title</th>
 					<th class="col-md-5">Body</th>
 					<th>Created At</th>
 					<th></th>
@@ -47,6 +47,11 @@
 
 				</tbody>
 			</table>
+
+			<div class="text-center">
+				 <p>Page {{ $posts->currentPage() }} of {{ $posts->lastPage() }}</p>
+				{!! $posts->links() !!}
+			</div> <!-- text-center -->
 		</div>
 	</div>
 

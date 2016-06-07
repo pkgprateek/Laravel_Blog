@@ -17,7 +17,7 @@ class PostController extends Controller
     public function index()
     {
         //create a variable and save all blog p[ost in that
-        $posts = Post::all();
+        $posts = Post::orderBy('id', 'desc')->paginate(10);
 
         ////return a view and pass in the above variable
         return view('posts.index')->with('posts', $posts);
@@ -44,12 +44,14 @@ class PostController extends Controller
         // validate the data
         $this->validate($request, array(
             'title' => 'required|max:255',
+            'slug' => 'required|alpha-dash|min:5|max:255|unique:posts,slug',
             'body' => 'required'
         ));
 
         //store in the database
         $post = new Post;
         $post->title = $request->title;
+        $post->slug = $request->slug;
         $post->body = $request->body;
 
         $post->save();
@@ -80,7 +82,11 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        //
+        //find the post in the database and save as a var
+        $post = Post::find($id);
+
+        //reurn the view and pass in the var created previously
+        return view('posts.edit')->with('post', $post);
     }
 
     /**
@@ -92,7 +98,34 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $post = Post::find($id);
+
+        //Validate the data
+        if ($request->input('slug') == $post->slug) {
+            $this->validate($request, array(
+                'title' => 'required|max:255',
+                'body' => 'required'
+            ));
+        } else {
+            $this->validate($request, array(
+                'title' => 'required|max:255',
+                'slug' => 'required|alpha-dash|min:5|max:255|unique:posts,slug',
+                'body' => 'required'
+            ));
+        }
+
+        //Save the data to the database
+        $post->title = $request->input('title');
+        $post->slug = $request->input('slug');
+        $post->body = $request->input('body');
+
+        $post->save();
+
+        //set flash data with the success message
+        Session::flash('success', 'The post has been successfully updated!');
+
+        //redirect with flash message to posts.show
+        return redirect()->route('posts.show', $post->id);
     }
 
     /**
@@ -103,6 +136,10 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $post = Post::find($id);
+
+        $post->delete();
+
+        return redirect()->route('posts.index');
     }
 }

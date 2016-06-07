@@ -14,12 +14,17 @@
 			<div class="well">
 
 				<dl class="dl-horizontal">
-					<dt>Created At:</dt>
-					<dd>{{$post->created_at->diffForHumans(	)}}</dd>
+					<label>URL:</label>
+					<p><a href="{{ route('blog.single', $post->slug) }}">{{ route('blog.single', $post->slug) }}</a></p>
+				</dl>
+
+				<dl class="dl-horizontal">
+					<label>Created At:</label>
+					<p>{{$post->created_at->diffForHumans(	)}}</p>
 				</dl>
 				<dl class="dl-horizontal">
-					<dt>Last Updated:</dt>
-					<dd>{{$post->updated_at->diffForHumans(	)}}</dd>
+					<label>Last Updated:</label>
+					<p>{{$post->updated_at->diffForHumans(	)}}</p>
 				</dl>
 				<hr class="featurate-divider">
 
@@ -28,7 +33,17 @@
 						{!! Html::linkRoute('posts.edit', 'Edit', array($post->id), array('class' => 'btn btn-primary btn-block')) !!}
 					</div>
 					<div class="col-sm-6">
-						{!! Html::linkRoute('posts.destroy', 'Delete', array($post->id), array('class' => 'btn btn-danger btn-block')) !!}
+						{!! Form::open(array('route' => array('posts.destroy', $post->id), 'method' => 'DELETE')) !!}
+
+						{!! Form::submit('Delete', array('class' => 'btn btn-danger btn-block')) !!}
+
+						{!! Form::close() !!}
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-md-12">
+						{{ Html::linkRoute('posts.index', '<< See All Posts', array(), array('class' => 'btn btn-deafult btn-block btn-h1-spacing')) }}
 					</div>
 				</div>
 
