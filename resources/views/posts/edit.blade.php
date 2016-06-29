@@ -1,17 +1,20 @@
 @extends('main')
 
-@section('title', '| Edit Post')
-	<br><br><br><br>
+@section('title', '| All Posts')
+
 @section('content')
+	
 	<div class='row'>
-		
-		{!! Form::model($post, array('route' => array('posts.update', $post->id), 'method' => 'PUT')) !!}
+		{!! Form::model($post, ['route' => ['posts.update', $post->id], 'method' => 'PUT']) !!}
 			<div class='col-md-8'>
 				{{ Form::label('title', 'Title:') }}
 				{{ Form::text('title', null, array('class' => 'form-control input-lg')) }}
 
 				{{ Form::label('slug', 'URL:', array('class' => 'form-spacing-top')) }}
 				{{ Form::text('slug', null, array('class' => 'form-control')) }}
+
+				{{ Form::label('category_id', "Category:") }}
+				{{ Form::select('category_id', $categories, $post->category_id, ['calss' => 'form-control form-spacing-top']) }}
 
 				{{ Form::label('body', 'Body:', array('class' => 'form-spacing-top')) }}
 				{{ Form::textarea('body', null, array('class' => 'form-control')) }}
@@ -35,7 +38,7 @@
 							{!! Html::linkRoute('posts.show', 'Cancel', array($post->id), array('class' => 'btn btn-danger btn-block')) !!}
 						</div>
 						<div class="col-sm-6">
-							{!! Form::submit('Save Changes', array('class' => 'btn btn-success btn-block')) !!}
+							{{ Form::submit('Save Changes', array('class' => 'btn btn-success btn-block')) }}
 						</div>
 					</div>
 

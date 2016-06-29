@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddSlugToPosts extends Migration
+class CreateCategoriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,8 +12,10 @@ class AddSlugToPosts extends Migration
      */
     public function up()
     {
-        Schema::table('posts', function ($table) {
-            $table->string('slug')->unique()->after('body');
+        Schema::create('categories', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('name');
+            $table->timestamps();
         });
     }
 
@@ -24,8 +26,6 @@ class AddSlugToPosts extends Migration
      */
     public function down()
     {
-        Schema::table('posts', function() {
-            $table->dropColumn('slug');
-        });
+        Schema::drop('categories');
     }
 }

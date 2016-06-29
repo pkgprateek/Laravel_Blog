@@ -16,6 +16,11 @@ class CreatePostsTable extends Migration
             $table->increments('id');
             $table->string('title');
             $table->text('body');
+            $table->string('slug')->unique();
+            $table->integer('category_id')->nullable()->unsigned();
+            $table->string('image_path')->nullable();
+            $table->smallInteger('post_comment_count')->unsigned()->default(0);
+            $table->integer('post_view_count')->unsigned()->default(0);
             $table->timestamps();
         });
     }

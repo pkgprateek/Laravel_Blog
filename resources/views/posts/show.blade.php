@@ -1,16 +1,21 @@
 @extends('main')
 
 @section('title', '| View Post')
-	<br><br><br><br>
+
 @section('content')
 	<div class='row'>
-		<div class='col-md-8'>
-			<h1>{{ $post->title }}</h1>
+		<div class="col-md-8" style="text-align: center;">
+			<h1 style="margin-bottom: 35px;">{{ $post->title }}</h1>
+			<img style=" max-height: 700px; max-width: 700px; width: auto; height: auto; " src="{{ $post->image_path }}">
+			<div style="text-align: justify; margin-top: 40px;">
+				{!! $post->body !!}
+			</div>
 
-			<p class="lead">{{ $post->body }}</p>
 		</div>
 
 		<div class="col-md-4">
+			<br><br><br><br>
+
 			<div class="well">
 
 				<dl class="dl-horizontal">
@@ -19,12 +24,17 @@
 				</dl>
 
 				<dl class="dl-horizontal">
+					<label>Category:</label>
+					<p>{{ $post->category->name }}</p>
+				</dl>
+
+				<dl class="dl-horizontal">
 					<label>Created At:</label>
-					<p>{{$post->created_at->diffForHumans(	)}}</p>
+					<p>{{ date('l, F d, Y', strtotime($post->created_at)) }}</p>
 				</dl>
 				<dl class="dl-horizontal">
 					<label>Last Updated:</label>
-					<p>{{$post->updated_at->diffForHumans(	)}}</p>
+					<p>{{ date('l, F d, Y', strtotime($post->updated_at)) }}</p>
 				</dl>
 				<hr class="featurate-divider">
 

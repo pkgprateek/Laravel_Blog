@@ -1,32 +1,33 @@
-<!-- Fixed navbar -->
-<nav class="navbar navbar-default navbar-fixed-top">
-    <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="/">Tnine Blog</a>
+<!-- Header -->
+<div id="header">
+    <div class="container"> 
+
+        
+        <!-- Logo -->
+        <div id="logo">
+            <h1><a href="/"><img id="logo-img" src="http://tnine.io/img/logo_web-01.png"></a></h1>
+            <span>Welcome to Tnine Blog</span>
         </div>
-        <div id="navbar" class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
+        
+        <!-- Nav -->
+        <nav id="nav">
+            <ul>
                 <li class="{{ Request::is('/') ? "active" : ""}}"><a href="/">Home</a></li>
-                <li class="{{ Request::is('blog') ? "active" : ""}}"><a href="/blog">Blog</a></li>
+                <li class="{{ Request::is('blog') ? "active" : ""}}"><a href="/blog">Archive</a></li>
+                @if (Auth::check())
+                    <li class="{{ Request::is('posts/create') ? "active" : ""}}"><a href="{{ route('posts.create') }}">Create Post</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user"></span><span class="caret"></span> Hello {{ Auth::user()->name }}</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{{ route('posts.index') }}">Posts</a></li>
+                            <li><a href="{{ route('categories.index') }}">Category</a></li>
+                            <li><a href="{{ route('logout') }}">Logout</a></li>
+                        </ul>
+                    </li>
+                @else
+                    <a href="{{ route('login') }}">LOGIN</a>
+                @endif
             </ul>
-            <ul class="nav navbar-nav navbar-right">
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user"></span><span class="caret"></span> My Account</a>
-                    <ul class="dropdown-menu">
-                        <li><a href="{{ route('posts.index') }}">Posts</a></li>
-                        <li><a href="#">Withlist</a></li>
-                        <li><a href="#">Favorites</a></li>
-                        <li role="separator" class="divider"></li>
-                        <li><a href="#">Logout</a></li>
-                    </ul>
-                </li>
-            </ul>
-        </div><!--/.nav-collapse -->
+        </nav>
     </div>
-</nav>
+</div>
